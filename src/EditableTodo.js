@@ -12,7 +12,7 @@ import TodoForm from "./TodoForm";
  * EditableTodoList -> EditableTodo -> { Todo, TodoForm }
  */
 
-function EditableTodo(todo, update, remove) {
+function EditableTodo({todo, update, remove}) {
   const [isEditing, setIsEditing] = useState(false);
   console.log({todo, isEditing})
   /** Toggle if this is being edited */
@@ -32,9 +32,12 @@ function EditableTodo(todo, update, remove) {
   }
   return (
     <div className="EditableTodo">
-
+        {isEditing &&
+          <TodoForm initialFormData={todo} handleSave={handleSave}/>
+        }
+      {!isEditing &&
       <div className="mb-3">
-        {!isEditing &&
+
           <div className="float-right text-sm-right">
             <button
               className="EditableTodo-toggle btn-link btn btn-sm"
@@ -47,16 +50,14 @@ function EditableTodo(todo, update, remove) {
               Del
             </button>
             <Todo
-            id={todo.todo.id}
-            title={todo.todo.title}
-            description={todo.todo.description}
-            priority={todo.todo.priority}
+            id={todo.id}
+            title={todo.title}
+            description={todo.description}
+            priority={todo.priority}
           />
-          </div>}
-        {isEditing &&
-          <TodoForm todo={todo} handleSave={handleSave}/>
-        }
-      </div>
+          </div>
+
+      </div>}
 
     </div>
   );
